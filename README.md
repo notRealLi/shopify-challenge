@@ -1,20 +1,20 @@
 # Question 1
 
-##The Fault In Our AOV
+## The Fault In Our AOV
 
-###_The Problem_
+### _The Problem_
 
-#####On Shopify, we have exactly 100 sneaker shops, and each of these shops sells only one model of shoe. We want to do some analysis of the average order value (AOV). When we look at orders data over a 30 day window, we naively calculate an AOV of \$3145.13. Given that we know these shops are selling sneakers, a relatively affordable item, something seems wrong with our analysis.
+##### On Shopify, we have exactly 100 sneaker shops, and each of these shops sells only one model of shoe. We want to do some analysis of the average order value (AOV). When we look at orders data over a 30 day window, we naively calculate an AOV of \$3145.13. Given that we know these shops are selling sneakers, a relatively affordable item, something seems wrong with our analysis.
 
-#####1. Think about what could be going wrong with our calculation. Think about a better way to evaluate this data.
+##### 1. Think about what could be going wrong with our calculation. Think about a better way to evaluate this data.
 
-#####2. What metric would you report for this dataset?
+##### 2. What metric would you report for this dataset?
 
-#####3. What is its value?
+##### 3. What is its value?
 
-###_Analysis_
+### _Analysis_
 
-#####Let's take a peek at the data first.
+##### Let's take a peek at the data first.
 
 In [102]:
 
@@ -40,7 +40,7 @@ In [102]:
     4         2017-03-26 12:43:37
     5          2017-03-01 4:35:11
 
-#####We can see that each row corresponds to one order. Let's look at a summary of relevant data.
+##### We can see that each row corresponds to one order. Let's look at a summary of relevant data.
 
 In [75]:
 
@@ -59,9 +59,9 @@ In [75]:
     75%       390.000000      3.00000
     max    704000.000000   2000.00000
 
-#####Immediately from the description of the data frame, we can tell that the average order value (AOV) was calculated in the same way as the mean value of order amount, which is `$`3145.13.
+##### Immediately from the description of the data frame, we can tell that the average order value (AOV) was calculated in the same way as the mean value of order amount, which is `$`3145.13.
 
-#####And we can see that the maximum value of the order amount `$`704,000.00 is abnormally higher than the average. This is most likely the reason why we got such an absurd figure for the AOV. Let's investigate further by looking at orders with out-of-ordinary values (higher than `$`10,000).
+##### And we can see that the maximum value of the order amount `$`704,000.00 is abnormally higher than the average. This is most likely the reason why we got such an absurd figure for the AOV. Let's investigate further by looking at orders with out-of-ordinary values (higher than `$`10,000).
 
 In [77]:
 
@@ -84,7 +84,7 @@ In [77]:
     491       2017-03-26 17:08:19
     494       2017-03-16 21:39:35
 
-#####From here we can see that high value orders are placed at certain shops. There are 2 of those shops it seems. Let's confirm by counting unique shop ID's.
+##### From here we can see that high value orders are placed at certain shops. There are 2 of those shops it seems. Let's confirm by counting unique shop ID's.
 
 In [43]:
 
@@ -93,7 +93,7 @@ In [43]:
     shop_id    2
     dtype: int64
 
-#####There are indeed 2 shops where high value orders occur. Though the circumstances of orders placed at each shop don't seem to be similar. Let's look at them separately. First, shop 42.
+##### There are indeed 2 shops where high value orders occur. Though the circumstances of orders placed at each shop don't seem to be similar. Let's look at them separately. First, shop 42.
 
 In [61]:
 
@@ -141,11 +141,11 @@ In [61]:
     4869      2017-03-22 4:00:00       352.0
     4883      2017-03-25 4:00:00       352.0
 
-#####The abnormal orders placed at shop 42 are rather curious. The were all made by the same user, of the same quantity and at the same time of the day (4:00:00).
+##### The abnormal orders placed at shop 42 are rather curious. The were all made by the same user, of the same quantity and at the same time of the day (4:00:00).
 
-#####I believe these orders occur too often to be just erroneous data. The other possibility I could think of is that the user ordered these sneakers in large quantities for resale purposes. And he or she set up an automatic re-ordering for re-stocking.
+##### I believe these orders occur too often to be just erroneous data. The other possibility I could think of is that the user ordered these sneakers in large quantities for resale purposes. And he or she set up an automatic re-ordering for re-stocking.
 
-#####Let us then look at the shop 78.
+##### Let us then look at the shop 78.
 
 In [60]:
 
@@ -169,13 +169,13 @@ In [60]:
     512        2017-03-09 7:23:14     25725.0
     618       2017-03-18 11:18:42     25725.0
 
-###_Answers_
+### _Answers_
 
-#####We can see that the occurrences of high value orders at shop 78 were simply due to the fact that the shop sells an expensive brand of sneaker, priced at \\\$25725.00 a pair.
+##### We can see that the occurrences of high value orders at shop 78 were simply due to the fact that the shop sells an expensive brand of sneaker, priced at \\\$25725.00 a pair.
 
-#####In both cases, the data was legitimate. So I don't think it would be appropriate to simply drop them. Perhaps we should group the data and have separate metrics for difference groups of data. There are several ways to do this:
+##### In both cases, the data was legitimate. So I don't think it would be appropriate to simply drop them. Perhaps we should group the data and have separate metrics for difference groups of data. There are several ways to do this:
 
-######1.) Grouping the data by shops. I think this method is feasible in this case because the outliers occur due to the uncommon natures of some shops (sales of high-priced products and offering wholesale service).
+###### 1.) Grouping the data by shops. I think this method is feasible in this case because the outliers occur due to the uncommon natures of some shops (sales of high-priced products and offering wholesale service).
 
 In [103]:
 
@@ -189,7 +189,7 @@ In [103]:
     5    290.31
     Name: order_amount, dtype: float64
 
-######2.) Grouping the data by types of orders, retail orders vs. wholesale orders. For the purpose of classifying the orders, we define orders with quantity less than 10 as retail orders and those with 10 or more as wholesale orders.
+###### 2.) Grouping the data by types of orders, retail orders vs. wholesale orders. For the purpose of classifying the orders, we define orders with quantity less than 10 as retail orders and those with 10 or more as wholesale orders.
 
 In [90]:
 
@@ -203,7 +203,7 @@ In [90]:
     Retail AOV: $754.09
     Wholesale AOV: $704000.0
 
-######3.) Grouping the data by users. This approach could provide us insights into the total dollar value of each user. This could be helpful for when audience-targeting related desicions need to be made (discriminatory pricing, targeted ads etc.).
+###### 3.) Grouping the data by users. This approach could provide us insights into the total dollar value of each user. This could be helpful for when audience-targeting related desicions need to be made (discriminatory pricing, targeted ads etc.).
 
 In [98]:
 
@@ -217,7 +217,7 @@ In [98]:
     703       380.69
     Name: order_amount, dtype: float64
 
-#####However if we are required to come up with a SINGLE-value metric for the dataset, the first thing comes to mind is median. In the presence of large outliers, median is better than mean but it definitely leaves some information in the dataset unused.
+##### However if we are required to come up with a SINGLE-value metric for the dataset, the first thing comes to mind is median. In the presence of large outliers, median is better than mean but it definitely leaves some information in the dataset unused.
 
 In [114]:
 
@@ -225,7 +225,7 @@ In [114]:
 
     Order amount median: $284.0
 
-#####I don't think mode would be a very appropriate metric in this case. As shown below, "Order amounts" has large standard deviation and min-max difference, which means the value of a single order varies a lot. There are 258 unique values for order amount. If one of them happens to ocur the most often (`$`153.00), it does not represent the overall data that well.
+##### I don't think mode would be a very appropriate metric in this case. As shown below, "Order amounts" has large standard deviation and min-max difference, which means the value of a single order varies a lot. There are 258 unique values for order amount. If one of them happens to ocur the most often (`$`153.00), it does not represent the overall data that well.
 
 In [119]:
 
@@ -249,13 +249,13 @@ In [119]:
 
     Order amount mode: $153
 
-#####In my opinion, each of the mean (AOV), median, and mode provides different insights about the dataset. For example, the mean (AOV) leans towards the higher value side, which means higher value orders represent most of the revenue. And the median combined with mean, tells us that the distribution is skewed to the right, in other words, there are more high value orders than low value ones. I don't think we could pick one of them as THE metric. Instead, we need to consider every one and the combination of different metrics when evaluating the dataset.
+##### In my opinion, each of the mean (AOV), median, and mode provides different insights about the dataset. For example, the mean (AOV) leans towards the higher value side, which means higher value orders represent most of the revenue. And the median combined with mean, tells us that the distribution is skewed to the right, in other words, there are more high value orders than low value ones. I don't think we could pick one of them as THE metric. Instead, we need to consider every one and the combination of different metrics when evaluating the dataset.
 
 ---
 
 # Question 2
 
-####a. How many orders were shipped by Speedy Express in total?
+#### a. How many orders were shipped by Speedy Express in total?
 
 ```sql
 SELECT count(*)
@@ -265,10 +265,11 @@ USING (ShipperID)
 WHERE Shippers.ShipperName = 'Speedy Express'
 ```
 
-#####<i>Answer</i>: 54
+##### <i>Answer</i>: 54
+
 <br>
 
-####b. What is the last name of the employee with the most orders?
+#### b. What is the last name of the employee with the most orders?
 
 ```sql
 SELECT LastName
@@ -283,10 +284,11 @@ WHERE EmployeeID =
    GROUP BY EmployeeID)))
 ```
 
-#####<i>Answer</i>: Peacock
+##### <i>Answer</i>: Peacock
+
 <br>
 
-####c. What product was ordered the most by customers in Germany?
+#### c. What product was ordered the most by customers in Germany?
 
 ```sql
 SELECT ProductName
@@ -308,6 +310,6 @@ WHERE ProductID in
      GROUP BY ProductID)))
 ```
 
-#####<i>Answer</i>: Gorgonzola Telino
+##### <i>Answer</i>: Gorgonzola Telino
 
 ---
