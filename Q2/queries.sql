@@ -1,0 +1,45 @@
+--a.
+SELECT count(*)
+FROM Orders
+JOIN Shippers
+USING (ShipperID)
+WHERE Shippers.ShipperName = 'Speedy Express'
+
+--Answer: 54
+
+
+--b.
+SELECT LastName
+FROM Employees
+WHERE EmployeeID =
+(SELECT eID
+ FROM
+ (SELECT eID, max(numberOfOrders)
+  FROM
+  (SELECT EmployeeID as eID, count(*) as numberOfOrders
+   FROM Orders
+   GROUP BY EmployeeID)))
+
+--Answer: 'Peacock'
+
+
+--c.
+SELECT ProductName
+FROM Products
+WHERE ProductID in
+(SELECT ProductID
+ FROM
+ (SELECT max(numberOfOrders) as maxNumberOfOrders, ProductID
+  FROM
+  (SELECT ProductID, count(*) as numberOfOrders
+   FROM OrderDetails
+   WHERE OrderID in
+   (SELECT OrderID
+    FROM Orders
+    WHERE CustomerID in
+    (SELECT customerID
+     FROM customers
+     WHERE country = 'Germany'))
+     GROUP BY ProductID)))
+
+--Answer: 'Gorgonzola Telino'
