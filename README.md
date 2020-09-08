@@ -1,3 +1,15 @@
+Hello there 👋 You may have a quick look at my responses to the challenge questions here on the README file (other file formats also included on this repo). Before you do, I'd like to also present one of my projects that I've been working on recently - <b>Mirror Mirror</b>. It is a web application that performs sentiment analysis on the topics users enter. It's created with Next.js and Flask.
+
+- Demo: [here](https://mirror-mirror.vercel.app/)
+- Front/Middle end code: [Mirror Mirror](https://github.com/notRealLi/Mirror-Mirror)
+- Back end code: [Magic Well](https://github.com/notRealLi/Magic-Well)
+
+I would love to have the chance to talk about this project and get some feedback 😊
+
+#### And here is my responses to the questions:
+
+---
+
 # Question 1
 
 ## The Fault In Our AOV
